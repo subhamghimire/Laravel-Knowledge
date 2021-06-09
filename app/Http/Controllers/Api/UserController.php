@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Core\CreateUser;
+use App\Core\User\CreateUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
