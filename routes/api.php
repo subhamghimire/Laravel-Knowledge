@@ -13,3 +13,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group(['namespace'=> 'Api', 'middleware'=>['role:admin','auth:api']], function (){
+    Route::group(['prefix' => 'admin'], function () {
+        Route::post('invite', 'AdminController@invite');
+    });
+});
+
+Route::group(['namespace'=> 'Api', 'middleware'=>['auth:api']], function (){
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('create', 'UserController@store');
+    });
+});
