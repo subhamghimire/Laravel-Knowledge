@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Core\CreateUser;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
@@ -12,14 +11,20 @@ class UserController extends ApiController
     /**
      * Create new user
     */
-    public function store(UserRequest $request, $token)
+    public function store(Request $request, $token)
     {
-        $data = $this->validateApiRequest($request);
-        try{
-            $user = (new CreateUser())($data, $token);
-            return $this->successResponse($user);
-        }catch(\Throwable $exception){
-            return $this->failResponse();
+        $rules = [
+            'name' => 'required|min:4|max:20',
+            'password' => 'required',
+        ];
+        $response = $this->validateApiRequest($rules);
+        if ($response !== true) {
+            return $response;
         }
+        $created = (new CreateUser())($request, $token);
+        if ($created){
+            return $this->successResponse($created);
+        }
+       return $this->failResponse();
     }
 }
