@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace'=> 'Api', 'middleware'=>['role:admin','auth:api']], function (){
+Route::post('login', 'Auth\LoginController@login');
+
+Route::group(['namespace'=> 'Api', 'middleware'=>['admin','auth:sanctum']], function (){
     Route::group(['prefix' => 'admin'], function () {
         Route::post('invite', 'AdminController@invite');
     });
 });
 
-Route::group(['namespace'=> 'Api', 'middleware'=>['auth:api']], function (){
+Route::group(['namespace'=> 'Api', 'middleware'=>['auth:sanctum']], function (){
     Route::group(['prefix' => 'user'], function () {
         Route::post('create', 'UserController@store');
     });

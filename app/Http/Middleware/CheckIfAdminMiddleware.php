@@ -21,5 +21,6 @@ class CheckIfAdminMiddleware
         {
             return $next($request);
         }
+        return $request;
     }
 }

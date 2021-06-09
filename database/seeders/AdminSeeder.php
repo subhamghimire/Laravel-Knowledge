@@ -24,7 +24,6 @@ class AdminSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin@123'),
             'registered_at' => now(),
-            'api_token' => Str::random(60),
         ]);
     }
 }
