@@ -17,7 +17,7 @@ class UpdateInvitation
     {
         try {
             $code = random_int(100000, 999999);
-            $invitation->update(['registered_at' => now(), 'code' => $code]);
+            $invitation->update(['registered_at' => now(), 'code' => $code, 'expires_at' => now()->addMinutes(30)]);
             Mail::to($invitation->email)->send(
                 new SendCodeMail($code)
             );

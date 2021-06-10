@@ -21,10 +21,10 @@ class HasCodeMiddleware
             return response()->json(['message'=>'Code doesnot exists']);
         }
         $code = $request->get('code');
-        $confirmationCode = Invitation::find($code)->where('expires_at','>',now());
-        if (!$confirmationCode)
+        $invitation = Invitation::where('code',$code)->where('email',$request->get('email'))->where('expires_at','>',now())->first();
+        if (!$invitation)
         {
-            return response()->json(['message'=>'Please Confirm code and continue']);
+            return response()->json(['message'=>'Link doesnot exists!']);
         }
         return $next($request);
     }

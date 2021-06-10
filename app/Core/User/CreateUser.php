@@ -3,7 +3,6 @@
 
 namespace App\Core\User;
 
-
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +10,6 @@ class CreateUser
 {
     /**
      * @param $data
-     * @return User
      * Creat a user and return user instance
     */
     public function __invoke($data)
@@ -21,7 +19,9 @@ class CreateUser
         $data['avatar'] = 'avatar/avatar.jpg';
         $data['registered_at'] = now();
         $data['user_role'] = User::IS_USER;
-       return User::create($data);
+        $user = User::create($data);
+        $user->createToken('Personal Access Token');
+        return $user;
     }
 
 }
