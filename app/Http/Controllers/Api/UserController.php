@@ -9,22 +9,20 @@ use Illuminate\Http\Request;
 class UserController extends ApiController
 {
     /**
-     * Create new user
+     * Update profile of a user
     */
-    public function store(Request $request, $token)
+    public function update(Request $request, $user)
     {
         $rules = [
             'name' => 'required|min:4|max:20',
+            'email' => 'required',
             'password' => 'required',
+            'avatar' => 'dimensions:min_width=256,min_height=256'
         ];
         $response = $this->validateApiRequest($rules);
         if ($response !== true) {
             return $response;
         }
-        $created = (new CreateUser())($request, $token);
-        if ($created){
-            return $this->successResponse($created);
-        }
-       return $this->failResponse();
+
     }
 }

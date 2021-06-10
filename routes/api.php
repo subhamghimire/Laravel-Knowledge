@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', 'Auth\LoginController@login');
+Route::post('confirm','Auth\RegisterController@confirm')->middleware('hasInvitation')->name('confirm');
+Route::post('register','Auth\RegisterController@store')->middleware('hasCode');
 
 Route::group(['namespace'=> 'Api', 'middleware'=>['admin','auth:sanctum']], function (){
     Route::group(['prefix' => 'admin'], function () {
@@ -24,6 +26,6 @@ Route::group(['namespace'=> 'Api', 'middleware'=>['admin','auth:sanctum']], func
 
 Route::group(['namespace'=> 'Api', 'middleware'=>['auth:sanctum']], function (){
     Route::group(['prefix' => 'user'], function () {
-        Route::post('create', 'UserController@store');
+        Route::post('update', 'UserController@update');
     });
 });
